@@ -5,22 +5,20 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [usuario, setUsuario] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem('token'));
-    const [cargando, setCargando] = useState(true);
+    const [token, setToken] = useState(() => localStorage.getItem('token'));
+    // Si no hay token guardado, no hay nada que esperar.
+    const [cargando, setCargando] = useState(() => !!localStorage.getItem('token'));
 
     // Al recargar la página, si hay token → recupera el perfil
     useEffect(() => {
-        if (token) {
-            getPerfil()
-                .then(datos => setUsuario(datos.usuario))
-                .catch(() => {
-                    localStorage.removeItem('token');
-                    setToken(null);
-                })
-                .finally(() => setCargando(false));
-        } else {
-            setCargando(false);
-        }
+        if (!token) return;
+        getPerfil()
+            .then(datos => setUsuario(datos.usuario))
+            .catch(() => {
+                localStorage.removeItem('token');
+                setToken(null);
+            })
+            .finally(() => setCargando(false));
     }, []);
 
     const iniciarSesion = async (tokenRecibido) => {

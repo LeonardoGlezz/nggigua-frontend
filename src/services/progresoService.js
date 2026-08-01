@@ -10,7 +10,7 @@ export const obtenerProgreso = async () => {
     return response.data;
 };
 
-export const getRankingMemorама = async () => {
+export const getRankingMemorama = async () => {
     const response = await api.get('/ranking/memorama');
     return response.data;
 };

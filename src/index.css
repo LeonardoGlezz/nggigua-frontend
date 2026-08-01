@@ -1,1 +1,118 @@
 @import "tailwindcss";
+
+/* Escala base más grande: todo lo que usa clases de Tailwind (gap, padding,
+   margin en rem) crece proporcionalmente con esto. */
+html {
+  font-size: 18px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* ===================== TEMA (claro / oscuro) ===================== */
+:root {
+  --bg-from: #FBF4E4;
+  --bg-to: #F3E3C4;
+  --bg-from-rgb: 251,244,228;
+  --bg-to-rgb: 243,227,196;
+
+  --card-bg: #FFFDF7;
+  --card-bg-rgb: 255,253,247;
+  --input-bg: #FFF9EE;
+
+  --heading: #1B2A4A;
+  --heading-rgb: 27,42,74;
+  --body-muted: #9A6B3A;
+  --tinted-text: #6b4a2a;
+  --input-text: #3A2A1D;
+  --on-photo: #F4ECD8;
+
+  --terracota: #C4622D;
+  --terracota-rgb: 196,98,45;
+  --gold: #E9C46A;
+  --gold-rgb: 233,196,106;
+  --success-dark: #2D6A4F;
+  --success-dark-rgb: 45,106,79;
+  --success-light: #52B788;
+  --success-light-rgb: 82,183,136;
+  --info: #4A90D9;
+  --info-rgb: 74,144,217;
+  --error: #E63946;
+  --error-rgb: 230,57,70;
+
+  --locked: #B99B6B;
+  --locked-soft: #C4B08A;
+  --locked-rgb: 154,107,58;
+  --locked2-rgb: 120,100,70;
+  --dot-inactive: #E8DCC3;
+
+  --overlay-rgb: 27,20,10;
+  --shadow-rgb: 90,58,20;
+
+  --purple-1: #4A1A4A;
+  --purple-2: #8B4A8B;
+}
+
+[data-tema="oscuro"] {
+  --bg-from: #141B2E;
+  --bg-to: #0A0F1C;
+  --bg-from-rgb: 20,27,46;
+  --bg-to-rgb: 10,15,28;
+
+  --card-bg: #1E2740;
+  --card-bg-rgb: 30,39,64;
+  --input-bg: #262F4A;
+
+  --heading: #F4ECD8;
+  --heading-rgb: 244,236,216;
+  --body-muted: #C9B79A;
+  --tinted-text: #E4D6BE;
+  --input-text: #F3EEDF;
+  --on-photo: #F4ECD8;
+
+  --terracota: #E2864F;
+  --terracota-rgb: 226,134,79;
+  --gold: #F2D48A;
+  --gold-rgb: 242,212,138;
+  --success-dark: #5CB081;
+  --success-dark-rgb: 92,176,129;
+  --success-light: #82DDAF;
+  --success-light-rgb: 130,221,175;
+  --info: #85BCF0;
+  --info-rgb: 133,188,240;
+  --error: #F17B87;
+  --error-rgb: 241,123,135;
+
+  --locked: #9C8968;
+  --locked-soft: #7A6A50;
+  --locked-rgb: 156,137,104;
+  --locked2-rgb: 130,113,88;
+  --dot-inactive: #3A3524;
+
+  --overlay-rgb: 0,0,0;
+  --shadow-rgb: 0,0,0;
+
+  --purple-1: #6B2E6B;
+  --purple-2: #A868A8;
+}
+
+body, #root {
+  background: linear-gradient(180deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  min-height: 100vh;
+}
+
+*, *::before, *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+@keyframes floatMascot {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}

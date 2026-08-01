@@ -9,3 +9,8 @@ export const getActividades = async (nivelId) => {
     const response = await api.get(`/niveles/${nivelId}/actividades`);
     return response.data;
 };
+
+export const getItemsActividad = async (actividadId) => {
+    const response = await api.get(`/actividades/${actividadId}/items`);
+    return response.data;
+};
