@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import InterruptorTema from './components/InterruptorTema';
+import SincronizarPerfil from './components/SincronizarPerfil';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Intro from './pages/Intro';
@@ -18,6 +19,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <BrowserRouter>
+          <SincronizarPerfil />
           <InterruptorTema />
           <Routes>
             <Route path="/" element={<Login />} />

@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// En local no hace falta configurar nada: usa localhost por defecto.
+// En producción (Vercel), se define VITE_API_URL apuntando al backend
+// desplegado en Render.
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
 });
 
 api.interceptors.request.use((config) => {

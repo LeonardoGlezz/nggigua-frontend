@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 /* Escala base más grande: todo lo que usa clases de Tailwind (gap, padding,
-   margin en rem) crece proporcionalmente con esto. */
+   margin en rem) crece proporcionalmente con esto. El valor real lo define
+   --perfil-font-size más abajo, según el perfil de edad (Niño/Joven/Adulto). */
 html {
-  font-size: 18px;
+  font-size: var(--perfil-font-size, 18px);
 }
 
 body {
@@ -96,6 +97,82 @@ body {
 
   --purple-1: #6B2E6B;
   --purple-2: #A868A8;
+}
+
+/* ===================== PERFIL DE EDAD (Niño / Joven / Adulto) =====================
+   Segundo eje de personalización, independiente del tema claro/oscuro. Se activa
+   poniendo data-perfil="Niño|Joven|Adulto" en <html> (ver SincronizarPerfil.jsx).
+   --perfil-radius-mult y --perfil-anim-mult son multiplicadores sin unidad, pensados
+   para usarse en los componentes con calc(30px * var(--perfil-radius-mult)), etc. */
+:root {
+  --perfil-font-size: 18px;
+  --perfil-radius-mult: 1;
+  --perfil-anim-mult: 1;
+  --perfil-accent: var(--terracota);
+  --perfil-accent-rgb: var(--terracota-rgb);
+  --perfil-accent-2: var(--gold);
+  --perfil-accent-2-rgb: var(--gold-rgb);
+  --perfil-heading-font: 'Baloo 2', sans-serif;
+  --perfil-bg-opacity: 1;
+  --perfil-bg-filter: none;
+}
+
+/* Niño: paleta "fiesta" — coral y turquesa vivos encima de la base terracota/dorado,
+   letras y botones más grandes, formas muy redondeadas, fondo con más saturación. */
+[data-perfil="Niño"] {
+  --perfil-font-size: 20px;
+  --perfil-radius-mult: 1.35;
+  --perfil-anim-mult: 1.6;
+  --perfil-accent: #FF4D8D;
+  --perfil-accent-rgb: 255, 77, 141;
+  --perfil-accent-2: #00C2B8;
+  --perfil-accent-2-rgb: 0, 194, 184;
+  --perfil-heading-font: 'Baloo 2', sans-serif;
+  --perfil-bg-opacity: 1;
+  --perfil-bg-filter: saturate(1.4) brightness(1.03);
+}
+
+[data-tema="oscuro"][data-perfil="Niño"] {
+  --perfil-accent: #FF7AAE;
+  --perfil-accent-rgb: 255, 122, 174;
+  --perfil-accent-2: #4DE8DD;
+  --perfil-accent-2-rgb: 77, 232, 221;
+}
+
+/* Joven: es el diseño base actual de la app, sin cambios. */
+[data-perfil="Joven"] {
+  --perfil-font-size: 18px;
+  --perfil-radius-mult: 1;
+  --perfil-anim-mult: 1;
+  --perfil-accent: var(--terracota);
+  --perfil-accent-rgb: var(--terracota-rgb);
+  --perfil-accent-2: var(--gold);
+  --perfil-accent-2-rgb: var(--gold-rgb);
+  --perfil-heading-font: 'Baloo 2', sans-serif;
+  --perfil-bg-opacity: 1;
+  --perfil-bg-filter: none;
+}
+
+/* Adulto: paleta "documentado" — índigo/piedra desaturados en vez de terracota/dorado,
+   más compacto, esquinas menos infantiles, casi sin movimiento, fondo casi invisible. */
+[data-perfil="Adulto"] {
+  --perfil-font-size: 16px;
+  --perfil-radius-mult: 0.6;
+  --perfil-anim-mult: 0.35;
+  --perfil-accent: #3B4664;
+  --perfil-accent-rgb: 59, 70, 100;
+  --perfil-accent-2: #8C7B6A;
+  --perfil-accent-2-rgb: 140, 123, 106;
+  --perfil-heading-font: 'Nunito', sans-serif;
+  --perfil-bg-opacity: 0.12;
+  --perfil-bg-filter: grayscale(0.4) saturate(0.7);
+}
+
+[data-tema="oscuro"][data-perfil="Adulto"] {
+  --perfil-accent: #8C9BC4;
+  --perfil-accent-rgb: 140, 155, 196;
+  --perfil-accent-2: #B8A896;
+  --perfil-accent-2-rgb: 184, 168, 150;
 }
 
 body, #root {

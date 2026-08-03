@@ -10,7 +10,7 @@ import { getInsignias } from '../services/insigniaService';
 function TarjetaStat({ icono, etiqueta, valor, colorVar }) {
     return (
         <div className="text-center" style={{
-            flex: '1 1 160px', padding: '22px', borderRadius: '22px',
+            flex: '1 1 160px', padding: '22px', borderRadius: 'calc(22px * var(--perfil-radius-mult))',
             background: 'var(--card-bg)', border: `1px solid var(${colorVar})`,
         }}>
             <div style={{ fontSize: '26px', marginBottom: '6px' }}>{icono}</div>
@@ -24,7 +24,7 @@ function TarjetaInsignia({ insignia }) {
     const obtenida = insignia.obtenida;
     return (
         <div className="flex flex-col items-center text-center transition-all" style={{
-            gap: '8px', padding: '22px', borderRadius: '22px',
+            gap: '8px', padding: '22px', borderRadius: 'calc(22px * var(--perfil-radius-mult))',
             background: obtenida ? 'rgba(var(--gold-rgb),0.16)' : 'rgba(var(--locked-rgb),0.06)',
             border: obtenida ? '2px solid var(--gold)' : '2px solid rgba(var(--locked-rgb),0.15)',
             filter: obtenida ? 'none' : 'grayscale(70%)',
@@ -46,6 +46,14 @@ function TarjetaInsignia({ insignia }) {
         </div>
     );
 }
+
+// Mismas descripciones que se muestran al elegir el perfil en Registro.jsx,
+// repetidas aquí para que el usuario vea que su elección sí tiene un efecto real.
+const DESCRIPCION_PERFIL = {
+    'Niño': 'Letras grandes y colores vibrantes',
+    'Joven': 'Modo estándar de aprendizaje',
+    'Adulto': 'Modo detallado con más información',
+};
 
 function Perfil() {
     const navigate = useNavigate();
@@ -136,11 +144,16 @@ function Perfil() {
 
     const nombre = perfil?.usuario?.nombre || 'Explorador';
     const inicial = nombre.charAt(0).toUpperCase();
+    const tipoPerfil = perfil?.usuario?.tipo_perfil || 'Joven';
+    const esNino = tipoPerfil === 'Niño';
+    const esAdulto = tipoPerfil === 'Adulto';
+    const promedioPorActividad = actividadesCompletadas > 0 ? Math.round(puntosTotales / actividadesCompletadas) : 0;
 
     return (
         <div className="min-h-screen relative overflow-hidden" style={{ fontFamily: "'Nunito', sans-serif" }}>
             <div className="absolute inset-0" style={{
                 backgroundImage: `url(${aldeaFondo})`, backgroundSize: 'cover', backgroundPosition: 'center top',
+                opacity: 'var(--perfil-bg-opacity)', filter: 'var(--perfil-bg-filter)',
             }} />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(var(--bg-from-rgb),0.9), rgba(var(--bg-to-rgb),0.95))' }} />
 
@@ -148,15 +161,15 @@ function Perfil() {
                 {/* Header */}
                 <div className="flex justify-between items-center flex-wrap gap-3" style={{
                     padding: '22px 36px', background: 'rgba(var(--card-bg-rgb),0.75)', backdropFilter: 'blur(6px)',
-                    borderBottom: '1px solid rgba(var(--terracota-rgb),0.15)',
+                    borderBottom: '1px solid rgba(var(--perfil-accent-rgb),0.2)',
                 }}>
                     <button onClick={() => navigate('/dashboard')} style={{
-                        fontSize: '15px', padding: '11px 20px', borderRadius: '14px', border: 'none',
+                        fontSize: '15px', padding: '11px 20px', borderRadius: 'calc(14px * var(--perfil-radius-mult))', border: 'none',
                         background: 'rgba(var(--heading-rgb),0.08)', color: 'var(--heading)', fontWeight: 700, cursor: 'pointer',
                     }}>
                         ← Mapa
                     </button>
-                    <h1 className="truncate" style={{ margin: 0, fontFamily: "'Baloo 2', sans-serif", fontWeight: 800, fontSize: '22px', color: 'var(--heading)' }}>
+                    <h1 className="truncate" style={{ margin: 0, fontFamily: 'var(--perfil-heading-font)', fontWeight: 800, fontSize: '22px', color: 'var(--heading)' }}>
                         Mi Perfil
                     </h1>
                     <button onClick={handleLogout} style={{
@@ -174,18 +187,30 @@ function Perfil() {
                     <div className="flex flex-col items-center text-center mb-9">
                         <div className="flex items-center justify-center mb-4" style={{
                             width: '108px', height: '108px', borderRadius: '50%', fontWeight: 800, fontSize: '44px', color: 'white',
-                            background: 'linear-gradient(135deg, var(--terracota), var(--gold))',
-                            border: '4px solid rgba(var(--gold-rgb),0.6)', boxShadow: '0 10px 26px rgba(var(--terracota-rgb),0.3)',
+                            background: 'linear-gradient(135deg, var(--perfil-accent), var(--perfil-accent-2))',
+                            border: '4px solid rgba(var(--perfil-accent-rgb),0.7)', boxShadow: '0 10px 26px rgba(var(--perfil-accent-rgb),0.3)',
                         }}>
                             {inicial}
                         </div>
-                        <h2 style={{ margin: 0, fontFamily: "'Baloo 2', sans-serif", fontWeight: 800, fontSize: '28px', color: 'var(--heading)' }}>{nombre}</h2>
-                        <p style={{ margin: '5px 0 0', fontSize: '15px', color: 'var(--body-muted)' }}>
-                            Perfil {perfil?.usuario?.tipo_perfil || '—'}
+                        <h2 style={{ margin: 0, fontFamily: 'var(--perfil-heading-font)', fontWeight: 800, fontSize: '28px', color: 'var(--heading)' }}>{nombre}</h2>
+                        <p style={{ margin: '5px 0 0', fontSize: '15px', fontWeight: 700, color: 'var(--perfil-accent)' }}>
+                            Perfil {tipoPerfil}
                         </p>
-                        <p style={{ margin: '7px 0 0', fontSize: '15px', color: 'var(--terracota)' }}>
+                        <p style={{ margin: '2px 0 0', fontSize: '13px', color: 'var(--body-muted)' }}>
+                            {DESCRIPCION_PERFIL[tipoPerfil] || ''}
+                        </p>
+                        <p style={{ margin: '9px 0 0', fontSize: '15px', color: 'var(--terracota)' }}>
                             🔥 {racha} día{racha !== 1 ? 's' : ''} de racha
                         </p>
+                        {esNino && (
+                            <p style={{
+                                margin: '14px 0 0', padding: '10px 18px', borderRadius: 'calc(16px * var(--perfil-radius-mult))',
+                                fontSize: '15px', fontWeight: 700, color: 'var(--perfil-accent)',
+                                background: 'rgba(var(--perfil-accent-rgb),0.12)',
+                            }}>
+                                ¡Sigue así, {nombre}! 🌟 Cada día aprendes algo nuevo.
+                            </p>
+                        )}
                     </div>
 
                     {/* Estadísticas */}
@@ -193,14 +218,17 @@ function Perfil() {
                         <TarjetaStat icono="⭐" etiqueta="Puntos totales" valor={puntosTotales} colorVar="--terracota" />
                         <TarjetaStat icono="✅" etiqueta="Actividades" valor={`${actividadesCompletadas}/${totalActividades}`} colorVar="--success-dark" />
                         <TarjetaStat icono="🗺️" etiqueta="Niveles" valor={`${nivelesCompletados}/3`} colorVar="--info" />
+                        {esAdulto && (
+                            <TarjetaStat icono="📊" etiqueta="Promedio por actividad" valor={promedioPorActividad} colorVar="--purple-2" />
+                        )}
                     </div>
 
                     {/* Vitrina de insignias */}
                     <div>
-                        <h3 style={{ fontFamily: "'Baloo 2', sans-serif", fontWeight: 800, fontSize: '19px', margin: '0 0 18px', color: 'var(--heading)' }}>
+                        <h3 style={{ fontFamily: 'var(--perfil-heading-font)', fontWeight: 800, fontSize: '19px', margin: '0 0 18px', color: 'var(--heading)' }}>
                             🏅 Vitrina de insignias
                         </h3>
-                        <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))' }}>
+                        <div className="grid gap-4" style={{ gridTemplateColumns: esAdulto ? 'repeat(auto-fit, minmax(140px, 1fr))' : 'repeat(auto-fit, minmax(175px, 1fr))' }}>
                             {insignias.map(ins => (
                                 <TarjetaInsignia key={ins.id} insignia={ins} />
                             ))}
