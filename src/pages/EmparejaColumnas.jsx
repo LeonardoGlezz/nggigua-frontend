@@ -15,20 +15,18 @@ function calcularEstrellas(errores) {
     if (errores <= 3) return 2;
     return 1;
 }
-const TIPOS = ['nggigua', 'emoji', 'espanol'];
+const OTROS_TIPOS = ['emoji', 'espanol'];
 
-function tipoAleatorio(excluir) {
-    let tipo = TIPOS[Math.floor(Math.random() * TIPOS.length)];
-    while (tipo === excluir) {
-        tipo = TIPOS[Math.floor(Math.random() * TIPOS.length)];
-    }
-    return tipo;
-}
-
+// Un lado del par SIEMPRE debe mostrar la palabra en Nggigua — si no, el par
+// se puede resolver a simple vista relacionando español con emoji, sin saber
+// nada de la lengua (ej. "Casa" con 🏠). El otro lado alterna entre emoji y
+// español al azar, para variar la dificultad sin perder el objetivo del juego.
 function asignarTipos(item) {
-    const tipoIzq = TIPOS[Math.floor(Math.random() * TIPOS.length)];
-    const tipoDer = tipoAleatorio(tipoIzq);
-    return { ...item, tipoIzq, tipoDer };
+    const otroTipo = OTROS_TIPOS[Math.floor(Math.random() * OTROS_TIPOS.length)];
+    const ngguaEnIzquierda = Math.random() < 0.5;
+    return ngguaEnIzquierda
+        ? { ...item, tipoIzq: 'nggigua', tipoDer: otroTipo }
+        : { ...item, tipoIzq: otroTipo, tipoDer: 'nggigua' };
 }
 
 function renderContenido(item, tipo) {

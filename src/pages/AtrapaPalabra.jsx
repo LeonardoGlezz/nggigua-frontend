@@ -83,10 +83,26 @@ export default function AtrapaPalabra() {
         setPalabrasCayendo([...nuevas]);
     }, [palabraActual, palabras]);
 
+    // Ref que siempre apunta a la versión más reciente de lanzarNuevaspalabras
+    // (que a su vez está atada a palabraActual). El loop de animación de más
+    // abajo programa un setTimeout que puede disparar varios cientos de ms
+    // después de que la ronda ya cambió; si llamara directo a la función
+    // cerrada en ese momento, seguiría generando palabras contra el objetivo
+    // VIEJO (la palabra de la ronda anterior), aunque la pista en pantalla ya
+    // muestre la nueva — eso es lo que causaba que capturas correctas se
+    // marcaran como error de forma intermitente. Leer siempre por la ref
+    // elimina esa condición de carrera.
+    const lanzarNuevaspalabrasRef = useRef(lanzarNuevaspalabras);
+    lanzarNuevaspalabrasRef.current = lanzarNuevaspalabras;
+
+    // Solo lanza la primera oleada al iniciar la partida. Las siguientes
+    // oleadas las dispara el propio loop de animación (más abajo) cuando
+    // corresponde, para no competir con él.
     useEffect(() => {
         if (!juegoIniciado || juegoTerminado) return;
-        lanzarNuevaspalabras();
-    }, [indicePalabra, juegoIniciado]);
+        lanzarNuevaspalabrasRef.current();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [juegoIniciado]);
 
     useEffect(() => {
         if (!juegoIniciado || juegoTerminado || conteo !== null) return;
@@ -165,7 +181,7 @@ export default function AtrapaPalabra() {
                 p => p.capturada || p.fallida
             );
             if (todasTerminadas || necesitaNuevas) {
-                setTimeout(() => lanzarNuevaspalabras(), 600);
+                setTimeout(() => lanzarNuevaspalabrasRef.current(), 600);
             }
 
             animRef.current = requestAnimationFrame(loop);
