@@ -19,3 +19,13 @@ export const getPerfil = async () => {
     const response = await api.get('/auth/perfil-completo');
     return response.data;
 };
+
+export const olvidePassword = async (correo) => {
+    const response = await api.post('/auth/olvide-password', { correo });
+    return response.data;
+};
+
+export const restablecerPassword = async (token, nuevaContrasena) => {
+    const response = await api.post('/auth/restablecer-password', { token, nuevaContrasena });
+    return response.data;
+};

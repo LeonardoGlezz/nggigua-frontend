@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { guardarProgreso, getRankingMemorama } from '../services/progresoService';
 import { getItemsActividad } from '../services/leccionService';
 import { transformarItems } from '../utils/transformarItems';
+import AyudaFlotante from '../components/AyudaFlotante';
 
 const NOMBRE_NIVEL = ['Nivel 1 — Principiante', 'Nivel 2 — Intermedio', 'Nivel 3 — Avanzado'];
 
@@ -162,6 +163,7 @@ function Memorama() {
 
     return (
         <div className="min-h-screen flex flex-wrap relative" style={fondoPagina}>
+            <AyudaFlotante juego="memorama" />
 
             {/* Panel izquierdo - Score y Ranking */}
             <div className="flex flex-col gap-5 p-7" style={{ flex: '1 1 270px', background: 'rgba(var(--card-bg-rgb),0.6)', borderRight: '1px solid rgba(var(--terracota-rgb),0.15)' }}>

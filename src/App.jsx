@@ -13,6 +13,12 @@ import AtrapaPalabra from './pages/AtrapaPalabra';
 import EmparejaColumnas from './pages/EmparejaColumnas';
 import RuletaCategorias from './pages/RuletaCategorias';
 import Perfil from './pages/Perfil';
+import OlvideContrasena from './pages/OlvideContrasena';
+import RestablecerContrasena from './pages/RestablecerContrasena';
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsuarios from './pages/admin/AdminUsuarios';
+import AdminContenido from './pages/admin/AdminContenido';
 
 function App() {
   return (
@@ -32,6 +38,13 @@ function App() {
             <Route path="/empareja-columnas" element={<EmparejaColumnas />} />
             <Route path="/ruleta-categorias" element={<RuletaCategorias />} />
             <Route path="/perfil" element={<Perfil />} />
+            <Route path="/olvide-password" element={<OlvideContrasena />} />
+            <Route path="/restablecer-password" element={<RestablecerContrasena />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="usuarios" element={<AdminUsuarios />} />
+              <Route path="contenido" element={<AdminContenido />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>

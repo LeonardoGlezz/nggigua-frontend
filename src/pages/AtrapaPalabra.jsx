@@ -5,6 +5,7 @@ import { guardarProgreso } from '../services/progresoService';
 import { getItemsActividad } from '../services/leccionService';
 import { transformarItems } from '../utils/transformarItems';
 import exploradorCanasta from '../assets/explorador-canasta.png';
+import AyudaFlotante from '../components/AyudaFlotante';
 
 const ANCHO_PERSONAJE = 80;
 const VELOCIDAD_CAIDA_INICIAL = 0.16;
@@ -295,6 +296,7 @@ export default function AtrapaPalabra() {
 
     return (
         <div className="min-h-screen flex flex-col select-none" style={fondoPagina}>
+            <AyudaFlotante juego="atrapa_palabra" />
 
             {/* HEADER */}
             <div className="flex justify-between items-center flex-wrap gap-3 flex-shrink-0" style={{ padding: '14px 26px', background: 'rgba(var(--card-bg-rgb),0.75)', borderBottom: '1px solid rgba(var(--terracota-rgb),0.2)' }}>

@@ -1,4 +1,5 @@
 import aldeaFondo from '../assets/aldea-fondo.jpeg';
+import AyudaFlotante from '../components/AyudaFlotante';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -408,7 +409,7 @@ function TablaAdulto({ niveles, actividadesPorNivel, progreso, nivelBloqueado, n
 }
 
 function Dashboard() {
-    const { cerrarSesion } = useAuth();
+    const { cerrarSesion, esAdmin } = useAuth();
     const navigate = useNavigate();
     const [niveles, setNiveles] = useState([]);
     const [actividadesPorNivel, setActividadesPorNivel] = useState({});
@@ -481,6 +482,7 @@ function Dashboard() {
 
     return (
         <div className="min-h-screen relative overflow-hidden" style={{ fontFamily: "'Nunito', sans-serif" }}>
+            <AyudaFlotante juego="general" />
             <div className="absolute inset-0"
                 style={{
                     backgroundImage: `url(${aldeaFondo})`,
@@ -525,6 +527,14 @@ function Dashboard() {
                             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
                             {(perfil?.usuario?.nombre || 'U').charAt(0).toUpperCase()}
                         </div>
+                        {esAdmin && (
+                            <button onClick={() => navigate('/admin')} className="flex-shrink-0" title="Panel de administrador" style={{
+                                fontSize: '15px', padding: '11px 20px', borderRadius: '14px', border: 'none',
+                                background: 'linear-gradient(135deg, var(--terracota), var(--gold))', color: 'white', fontWeight: 700, cursor: 'pointer',
+                            }}>
+                                🛠️ Admin
+                            </button>
+                        )}
                         <button onClick={handleLogout} className="flex-shrink-0" style={{
                             fontSize: '15px', padding: '11px 20px', borderRadius: '14px',
                             border: '1px solid rgba(var(--terracota-rgb),0.3)', background: 'rgba(var(--terracota-rgb),0.08)', color: 'var(--terracota)', fontWeight: 700, cursor: 'pointer',

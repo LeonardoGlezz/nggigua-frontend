@@ -91,8 +91,15 @@ function Login() {
                         />
                     </div>
 
+                    <p className="text-right" style={{ margin: '-8px 0 0' }}>
+                        <span className="cursor-pointer" style={{ fontSize: '14px', color: 'var(--body-muted)', fontWeight: 700 }}
+                            onClick={() => navigate('/olvide-password')}>
+                            ¿Olvidaste tu contraseña?
+                        </span>
+                    </p>
+
                     {error && (
-                        <p className="text-center mb-4" style={{ fontSize: '15px', color: 'var(--error)', fontWeight: 700 }}>
+                        <p className="text-center mb-4 mt-3" style={{ fontSize: '15px', color: 'var(--error)', fontWeight: 700 }}>
                             {error}
                         </p>
                     )}

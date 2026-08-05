@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { guardarProgreso } from '../services/progresoService';
 import { getItemsActividad } from '../services/leccionService';
 import { transformarItems } from '../utils/transformarItems';
+import AyudaFlotante from '../components/AyudaFlotante';
 
 const NOMBRE_NIVEL = ['Nivel 1 — Básico', 'Nivel 2 — Intermedio', 'Nivel 3 — Avanzado'];
 
@@ -228,6 +229,7 @@ function EmparejaColumnas() {
 
     return (
         <div className="min-h-screen flex flex-wrap relative" style={fondoPagina}>
+            <AyudaFlotante juego="empareja" />
 
             {/* Panel izquierdo - Score */}
             <div className="flex flex-col gap-4 p-7" style={{ flex: '1 1 250px', background: 'rgba(var(--card-bg-rgb),0.6)', borderRight: '1px solid rgba(var(--terracota-rgb),0.15)' }}>

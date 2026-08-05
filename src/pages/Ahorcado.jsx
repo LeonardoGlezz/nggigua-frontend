@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { guardarProgreso } from '../services/progresoService';
 import { getItemsActividad } from '../services/leccionService';
 import { transformarItems } from '../utils/transformarItems';
+import AyudaFlotante from '../components/AyudaFlotante';
 
 import horca from '../assets/ahorcado/horca.jpg';
 import exploFeliz from '../assets/ahorcado/explorador-feliz.png';
@@ -201,6 +202,7 @@ export default function Ahorcado() {
 
     return (
         <div className="min-h-screen flex flex-col relative" style={fondoPagina}>
+            <AyudaFlotante juego="ahorcado" />
 
             {/* Flash de error */}
             <AnimatePresence>
