@@ -75,7 +75,11 @@ function AyudaFlotante({ juego }) {
                 title="Ver ayuda de este juego"
                 className="fixed flex items-center justify-center transition-transform"
                 style={{
-                    bottom: '22px', right: '22px', zIndex: 40,
+                    // El interruptor de modo día/noche (InterruptorTema) también es
+                    // position:fixed en la esquina inferior derecha (bottom:24px,
+                    // right:24px, ~52px de alto). Este botón se coloca justo encima
+                    // de él (24 + 52 + 12px de separación) para que no se encimen.
+                    bottom: '88px', right: '24px', zIndex: 900,
                     width: '52px', height: '52px', borderRadius: '50%', fontSize: '22px', fontWeight: 800,
                     color: 'white', border: 'none', cursor: 'pointer',
                     background: 'linear-gradient(135deg, var(--terracota), var(--gold))',
